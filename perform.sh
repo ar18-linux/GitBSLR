@@ -24,7 +24,7 @@ if [[ -f "${(P)script_dir_func}/vars.sh" ]]; then
 fi
 
 if [[ $# == 0 ]]; then
-  ar18__log__fatal "Specify script to be executed as only parameter" $LINENO "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}" "" 128
+  ar18__log__fatal "Specify script to be executed as only parameter (just the basename without extension)" $LINENO "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}" "" 128
 else
   . "./$1.sh"
 fi
