@@ -1,4 +1,4 @@
-. "${script_dir}/ar18lib/ar18.sh"
+. "${script_dir}/zsh_ar18_lib/ar18.sh"
 
 vars_needed=(\
   module_name\

@@ -2,9 +2,10 @@
 
 err_log=/tmp/errlog
 
-script_dir="$(cd "$(dirname "$(readlink -f "${(%):-%x}")")" >/dev/null 2>&1 && pwd)"
+script_dir_func="script_dir_${${(%):-%N}%%.*}"
+declare "${script_dir_func}"="$(cd "$(dirname "$(readlink -f "${(%):-%x}")")" >/dev/null 2>&1 && pwd)"
 
-. "${script_dir}/ar18lib/ar18__log__fatal.sh"
+. "${(P)script_dir_func}/zsh_ar18_lib/ar18__log__fatal.sh"
 
 
 function on_error(){
@@ -18,8 +19,8 @@ if [[ "$(whoami)" != "root" ]]; then
   ar18__log__fatal "Must be root" $LINENO "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}" "" 256
 fi
 
-if [[ -f "${script_dir}/vars.sh" ]]; then
-  . "${script_dir}/vars.sh"
+if [[ -f "${(P)script_dir_func}/vars.sh" ]]; then
+  . "${(P)script_dir_func}/vars.sh"
 fi
 
 if [[ $# == 0 ]]; then
