@@ -20,17 +20,18 @@ function "run_${$(basename "$(readlink -f "${(%):-%x}")")%%.*}"(){
   . "${(P)script_dir_func}/uninstall.sh"
   
   pushd
-  
+   
+  rm -rf "${working_dir_path}/${module_name}" || ar18__log__warn "folder did not exist" "$((${funcsourcetrace[-1]#*:} + LINENO))" "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}"
   cd "${working_dir_path}"
-  rm -rf "${module_name}" || ar18__log__warn "folder did not exist" "$((${funcsourcetrace[-1]#*:} + LINENO))" "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}" 
   git clone https://github.com/Alcaro/GitBSLR.git
-  cd "${module_name}"
+  cd "${working_dir_path}/${module_name}"
   #ar18__file__replace "./install.sh" 'TARGET="\$HOME/bin"' "TARGET=\"${install_parent_dir}/${module_name}\""
   #ar18__file__replace "./install.sh" 'TARGET' "FARGET"
   #TARGET="$HOME/bin"
+  
   "./install.sh"
-  cd ..
-  rm -rf "${module_name}" || ar18__log__warn "folder did not exist" "$((${funcsourcetrace[-1]#*:} + LINENO))" "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}"
+  cd "${working_dir_path}"
+  rm -rf "${working_dir_path}/${module_name}" || ar18__log__warn "folder did not exist" "$((${funcsourcetrace[-1]#*:} + LINENO))" "${"$(readlink -f "${(%):-%x}" | awk -F/ '{print $(NF-1) "/" $NF}')"}"
   popd
   mv '/usr/bin/git' "${git_backup_path}" || rm "/usr/bin/git"
   ln -s "/usr/local/bin/git" "/usr/bin/git"
