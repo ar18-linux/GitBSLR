@@ -21,4 +21,4 @@ make
 
 mkdir -p "${install_dir}/${module_name}"
 
-cp "${script_dir}/build/stderred/build/libtest_stderred.so" "${install_dir}/${module_name}/GitBSLR.so"
+cp "${script_dir}/build/GitBSLR/gitbslr.so" "${install_dir}/${module_name}/gitbslr.so"
