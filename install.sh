@@ -44,7 +44,7 @@ git clone https://github.com/Alcaro/GitBSLR.git
 cd "${script_dir}/build/GitBSLR"
 make
 
-cp "${script_dir}/build/GitBSLR/gitbslr.so" "${install_dir}/${module_name}/gitbslr.so"
+echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/build/GitBSLR/gitbslr.so" "${install_dir}/${module_name}/gitbslr.so"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
