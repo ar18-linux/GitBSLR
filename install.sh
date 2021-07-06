@@ -32,19 +32,24 @@ set -o pipefail
 set -eu
 #################################SCRIPT_START##################################
 
-. "${script_dir}/vars"
-if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
-obtain_sudo_password
+ar18.script.import ar18.script.install
+ar18.script.import ar18.script.execute_with_sudo
 
-ar18_install "${install_dir}" "${module_name}" "${script_dir}"
+. "${script_dir}/vars"
+
+ar18.script.install "${install_dir}" "${module_name}" "${script_dir}"
+
+build_dir="/tmp/"
+
+ar18.script.execute_with_sudo rm -rf "${build_dir}/GitBSLR"
 
 mkdir "${script_dir}/build"
-cd "${script_dir}/build"
+cd "${build}"
 git clone https://github.com/Alcaro/GitBSLR.git
-cd "${script_dir}/build/GitBSLR"
+cd "${build_dir}/GitBSLR"
 make
 
-echo "${ar18_sudo_password}" | sudo -Sk cp "${script_dir}/build/GitBSLR/gitbslr.so" "${install_dir}/${module_name}/gitbslr.so"
+ar18.script.execute_with_sudo cp "${build_dir}/GitBSLR/gitbslr.so" "${install_dir}/${module_name}/gitbslr.so"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
