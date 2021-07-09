@@ -61,8 +61,7 @@ build_dir="/tmp/"
 
 ar18.script.execute_with_sudo rm -rf "${build_dir}/GitBSLR"
 
-mkdir "${script_dir}/build"
-cd "${build}"
+cd "${build_dir}"
 git clone https://github.com/Alcaro/GitBSLR.git
 cd "${build_dir}/GitBSLR"
 make
